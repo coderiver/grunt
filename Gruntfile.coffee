@@ -1,26 +1,19 @@
 module.exports = (grunt) ->
-	grunt.initConfig
-		# includes:
-		# 	files:
-		# 		src: ["dev/*.html"] # Source files
-		# 		dest: "fancy" # Destination directory
-		# 		flatten: true
-		# 		cwd: "."
-		# 		options:
-		# 			silent: true
-		# 			filenamePrefix: "partials/"
-		# 			filenameSuffix: ".html"
-		bake:
-			build:
-				files:[{
-						src: "dev/index.html"
-						dest: "fancy/index.html"
-					},{
-						src: "dev/index1.html"
-						dest: "fancy/index1.html"
-					}
-				]
+	globalConfig =
+		src: "dev"
+		dest: "fancy"
 
+	grunt.initConfig
+		includes:
+			files:
+				src: ["dev/*.html"] # Source files
+				dest: "fancy" # Destination directory
+				flatten: true
+				cwd: "."
+				options:
+					silent: false
+					filenamePrefix: "includes/"
+					filenameSuffix: ".html"
 
 		clean:
 			files: ["fancy/*.html", "fancy/*.js", "fancy/img/"]
@@ -45,8 +38,8 @@ module.exports = (grunt) ->
 					filter: "isFile"
 				]
 		watch:
-			files: ["dev/*.html", "dev/js/*.js", "dev/partials/*.html", "dev/img/icons*.png"]
-			tasks: ["clean", "bake:build", "copy"]
+			files: ["dev/*.html", "dev/js/*.js", "dev/includes/*.html", "dev/img/icons*.png"]
+			tasks: ["clean", "includes", "copy"]
 
 	require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
 	grunt.registerTask "default", ["watch"]
